@@ -1,0 +1,17 @@
+- hosts: tag_Env_DEV_EC2
+  become: yes
+  tasks:
+  - name: updating packges and install tomcat
+    apt:
+     update_cache: yes
+     name: tomcat8
+  - name: copying war file
+    copy:
+     src: /var/lib/jenkins/workspace/pipeline_terraform/gameoflife-web/target/gameoflife.war
+     dest: /var/lib/tomcat8/webapps/gameoflife.war
+     mode: 0777
+  - name: copying a php file
+    copy:
+     src:  /var/lib/jenkins/workspace/pipeline_terraform/info.php
+     dest: /var/www/html/info.php
+     mode: 0777
